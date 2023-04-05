@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Protected from "./Protected.js";
+
+
+
+
+// import Layout from "./Layout";
+// import Home from "./Pages/Home";
+// import Nopage from "./Pages/Nopage";
+// import Todo from "./Components/Todo";
+// import Regex from "./Components/Regex";
+// import "bootstrap/dist/css/bootstrap.min.css";
+
+
+
+const Layout = React.lazy(() => import("./Layout"));
+const Home = React.lazy(() => import("./Pages/Home"));
+const Todo = React.lazy(() => import("./Components/Todo"));
+const Nopage = React.lazy(() => import("./Pages/Nopage"));
+const Login = React.lazy(() => import("./Pages/Login"));
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Login />} />
+          <Route path="/home"element={<Protected Component={Home} />} />
+          <Route path="/todo" element={<Protected Component={Todo} />} />
+         
+          <Route path="*" element={<Nopage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
